@@ -1,5 +1,7 @@
 import xs, { Stream } from 'xstream';
 import { VNode, DOMSource } from '@cycle/dom';
+import gql from 'graphql-tag';
+import client from '../drivers/apollo-client';
 
 import { Sources, Sinks, Reducer } from '../interfaces';
 
@@ -19,6 +21,26 @@ interface DOMIntent {
 export function Counter({ DOM, state }: Sources<State>): Sinks<State> {
     const { increment$, decrement$, link$ }: DOMIntent = intent(DOM);
 
+    client
+        .query({
+            query: gql`
+                {
+                    schedules {
+                        id
+                        employee
+                        createdAt
+                        updatedAt
+                        beginDate
+                        endDate
+                        status
+                    }
+                }
+            `
+        })
+        .then(result =>
+            result.data.schedules.map(schedule => console.log(schedule))
+        );
+
     return {
         DOM: view(state.stream),
         state: model(increment$, decrement$),
@@ -30,8 +52,8 @@ function model(
     increment$: Stream<any>,
     decrement$: Stream<any>
 ): Stream<Reducer<State>> {
-    const init$ = xs.of<Reducer<State>>(
-        prevState => (prevState === undefined ? defaultState : prevState)
+    const init$ = xs.of<Reducer<State>>(prevState =>
+        prevState === undefined ? defaultState : prevState
     );
 
     const addToState: (n: number) => Reducer<State> = n => state => ({

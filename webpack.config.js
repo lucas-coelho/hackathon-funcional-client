@@ -11,5 +11,9 @@ module.exports = {
         filename: 'bundle.[hash].js',
         path: appPath('build'),
         publicPath: '/'
+    },
+    resolve: {
+        mainFields: ['browser', 'main', 'module'],
+        extensions: ['.js', '.json', '.jsx']
     }
 };
