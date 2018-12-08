@@ -17,5 +17,6 @@ export interface Sinks<State> {
     DOM?: Stream<VNode>;
     router?: Stream<HistoryAction>;
     speech?: Stream<string>;
+    submit?: Stream<any>;
     state?: Stream<Reducer<State>>;
 }

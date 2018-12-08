@@ -54,10 +54,13 @@
   "dependencies": {
     "@cycle/dom": "^22.0.0",
     "@cycle/history": "^7.0.0",
+    "@cycle/http": "^15.0.0",
     "@cycle/isolate": "^4.1.0",
     "@cycle/run": "^5.1.0",
     "@cycle/state": "^1.0.0",
     "@cycle/time": "^0.16.0",
+    "cycle-graphql": "^0.1.1",
+    "cycle-graphql-most-driver": "^0.3.0",
     "cyclejs-utils": "^4.0.2",
     "cyclic-router": "^5.1.7",
     "switch-path": "^1.2.0",

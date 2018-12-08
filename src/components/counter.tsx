@@ -30,8 +30,8 @@ function model(
     increment$: Stream<any>,
     decrement$: Stream<any>
 ): Stream<Reducer<State>> {
-    const init$ = xs.of<Reducer<State>>(
-        prevState => (prevState === undefined ? defaultState : prevState)
+    const init$ = xs.of<Reducer<State>>(prevState =>
+        prevState === undefined ? defaultState : prevState
     );
 
     const addToState: (n: number) => Reducer<State> = n => state => ({
@@ -47,7 +47,7 @@ function model(
 function view(state$: Stream<State>): Stream<VNode> {
     return state$.map(({ count }) => (
         <div>
-            <h2>My Awesome Cycle.js app - Page 1</h2>
+            <h2>My Awesome Cycle.js app - Page Counter</h2>
             <span>{'Counter: ' + count}</span>
             <button type="button" className="add">
                 Increase
@@ -56,7 +56,7 @@ function view(state$: Stream<State>): Stream<VNode> {
                 Decrease
             </button>
             <button type="button" data-action="navigate">
-                Page 2
+                Page Form
             </button>
         </div>
     ));
@@ -79,5 +79,6 @@ function intent(DOM: DOMSource): DOMIntent {
 }
 
 function redirect(link$: Stream<any>): Stream<string> {
-    return link$.mapTo('/speaker');
+    return link$.mapTo('/form');
+    // return link$.mapTo('/list');
 }

@@ -9,6 +9,7 @@ import { Stream } from 'xstream';
 export default function speechDriver(speechText$: Stream<string>): void {
     speechText$.addListener({
         next: what => {
+            console.log('whaaaat : ' + what);
             if (window.speechSynthesis !== undefined) {
                 const utterance = new SpeechSynthesisUtterance(what);
                 window.speechSynthesis.speak(utterance);

@@ -8,16 +8,29 @@ import { Sources, Sinks, Reducer, Component } from '../interfaces';
 
 import { Counter, State as CounterState } from './counter';
 import { Speaker, State as SpeakerState } from './speaker';
+import { Form, State as FormState } from './form';
+import { List, State as ListState } from './list';
 
 export interface State {
     counter?: CounterState;
     speaker?: SpeakerState;
+    form?: FormState;
+    list?: ListState;
 }
 
 export function App(sources: Sources<State>): Sinks<State> {
+    let request$ = xs.of({
+        url:
+            'https://hackathon-funcional-c5efe81488.herokuapp.com/hackathon-funcional-server/dev',
+        method: 'POST',
+        category: 'hello'
+    });
+
     const match$ = sources.router.define({
         '/counter': isolate(Counter, 'counter'),
-        '/speaker': isolate(Speaker, 'speaker')
+        '/speaker': isolate(Speaker, 'speaker'),
+        '/form': isolate(Form, 'form'),
+        '/list': isolate(List, 'list')
     });
 
     const componentSinks$: Stream<Sinks<State>> = match$
